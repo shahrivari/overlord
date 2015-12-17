@@ -1,4 +1,4 @@
-package amu.saeed.overlord.net;
+package amu.saeed.overlord.io;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
