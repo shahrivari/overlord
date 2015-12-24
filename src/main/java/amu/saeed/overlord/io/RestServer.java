@@ -10,7 +10,7 @@ import static spark.Spark.*;
 public class RestServer {
     int port = 1234;
     int threadsNum = 16;
-    KvStoreHub kvStoreHub = new KvStoreHub(10_000);
+    KvStoreHub kvStoreHub = new KvStoreHub();
 
     public static void main(String[] args) {
         RestServer restServer = new RestServer();
