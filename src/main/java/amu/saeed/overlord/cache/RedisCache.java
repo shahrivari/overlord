@@ -1,7 +1,7 @@
 package amu.saeed.overlord.cache;
 
 import com.lambdaworks.redis.RedisClient;
-import com.lambdaworks.redis.RedisConnection;
+import com.lambdaworks.redis.api.StatefulRedisConnection;
 import com.lambdaworks.redis.codec.RedisCodec;
 
 import java.nio.ByteBuffer;
@@ -11,10 +11,10 @@ import java.nio.ByteBuffer;
  */
 public class RedisCache implements Cache {
     RedisClient client;
-    RedisConnection<byte[], byte[]> connection;
+    StatefulRedisConnection<byte[], byte[]> connection;
 
     public RedisCache() {
-        this.client = new RedisClient("127.0.0.1");
+        client = RedisClient.create("redis://localhost:6379");
         connection = client.connect(new RedisCodec<byte[], byte[]>() {
             @Override public byte[] decodeKey(ByteBuffer byteBuffer) {
                 return byteBuffer.array();
@@ -24,29 +24,29 @@ public class RedisCache implements Cache {
                 return byteBuffer.array();
             }
 
-            @Override public byte[] encodeKey(byte[] bytes) {
-                return bytes;
+            @Override public ByteBuffer encodeKey(byte[] bytes) {
+                return ByteBuffer.wrap(bytes);
             }
 
-            @Override public byte[] encodeValue(byte[] bytes) {
-                return bytes;
+            @Override public ByteBuffer encodeValue(byte[] bytes) {
+                return ByteBuffer.wrap(bytes);
             }
         });
     }
 
     @Override public void put(byte[] key, byte[] val) {
-        connection.set(key, val);
+        connection.sync().set(key, val);
     }
 
     @Override public byte[] get(byte[] key) {
-        return connection.get(key);
+        return connection.sync().get(key);
     }
 
     @Override public void delete(byte[] key) {
-        connection.del(key);
+        connection.sync().del(key);
     }
 
     @Override public void updateIfPresent(byte[] key, byte[] val) {
-        connection.set(key, val);
+        connection.sync().set(key, val);
     }
 }

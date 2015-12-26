@@ -16,13 +16,11 @@ public class HazelcastDataGrid implements Cache {
         l2Cache = instance.getMap("l2");
     }
 
-    @Override
-    public void put(byte[] key, byte[] val) {
+    @Override public void put(byte[] key, byte[] val) {
         l2Cache.put(new ByteArrayWrapper(key), val);
     }
 
-    @Override
-    public byte[] get(byte[] key) {
+    @Override public byte[] get(byte[] key) {
         Object obj = l2Cache.get(new ByteArrayWrapper(key));
         if (obj != null)
             return (byte[]) obj;
@@ -30,13 +28,11 @@ public class HazelcastDataGrid implements Cache {
             return null;
     }
 
-    @Override
-    public void delete(byte[] key) {
+    @Override public void delete(byte[] key) {
         l2Cache.remove(new ByteArrayWrapper(key));
     }
 
-    @Override
-    public void updateIfPresent(byte[] key, byte[] val) {
+    @Override public void updateIfPresent(byte[] key, byte[] val) {
         ByteArrayWrapper key_ = new ByteArrayWrapper(key);
         if (l2Cache.get(key_) != null)
             l2Cache.put(key_, val);

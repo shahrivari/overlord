@@ -27,8 +27,7 @@ public class ByteArrayWrapper implements Externalizable {
         return array.length;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
@@ -37,21 +36,18 @@ public class ByteArrayWrapper implements Externalizable {
         return Arrays.equals(array, byteArray.array);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         if (hashCode == 0)
             hashCode = Arrays.hashCode(array);
         return hashCode;
     }
 
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
+    @Override public void writeExternal(ObjectOutput out) throws IOException {
         out.writeInt(array.length);
         out.write(array);
     }
 
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         array = new byte[in.readInt()];
         in.read(array);
     }

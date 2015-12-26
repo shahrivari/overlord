@@ -32,13 +32,11 @@ public class IgniteDataGrid implements Cache {
         igniteCache = ignite.getOrCreateCache(cacheConfiguration);
     }
 
-    @Override
-    public void put(byte[] key, byte[] val) {
+    @Override public void put(byte[] key, byte[] val) {
         igniteCache.put(new ByteArrayWrapper(key), new ByteArrayWrapper(val));
     }
 
-    @Override
-    public byte[] get(byte[] key) {
+    @Override public byte[] get(byte[] key) {
         Object obj = igniteCache.get(new ByteArrayWrapper(key));
         if (obj != null)
             return ((ByteArrayWrapper) obj).getArray();
@@ -46,13 +44,11 @@ public class IgniteDataGrid implements Cache {
             return null;
     }
 
-    @Override
-    public void delete(byte[] key) {
+    @Override public void delete(byte[] key) {
         igniteCache.clear(new ByteArrayWrapper(key));
     }
 
-    @Override
-    public void updateIfPresent(byte[] key, byte[] val) {
+    @Override public void updateIfPresent(byte[] key, byte[] val) {
         ByteArrayWrapper key_ = new ByteArrayWrapper(key);
         if (igniteCache.get(key_) != null)
             igniteCache.put(key_, new ByteArrayWrapper(val));

@@ -20,7 +20,7 @@ public class CacheTest {
         Cache cache = new RedisCache();
         Random random = new Random();
         Stopwatch stopwatch = Stopwatch.createStarted();
-        Thread[] threads = new Thread[20];
+        Thread[] threads = new Thread[40];
         for (int i = 0; i < threads.length; i++) {
             threads[i] = new Thread(() -> {
                 while (remaining.decrementAndGet() > 0)

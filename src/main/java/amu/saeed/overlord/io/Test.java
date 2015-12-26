@@ -21,7 +21,7 @@ public class Test {
 
         Producer<String, String> producer = new KafkaProducer(props);
         Stopwatch stopwatch = Stopwatch.createStarted();
-        for(int i = 0; i < 1000000; i++)
+        for (int i = 0; i < 1000000; i++)
             producer.send(new ProducerRecord<>("test", Integer.toBinaryString(i), Integer.toBinaryString(i)));
         producer.close();
         System.out.println(stopwatch);
