@@ -26,14 +26,16 @@ public class KeyValue implements Serializable, Externalizable {
         return value;
     }
 
-    @Override public void writeExternal(ObjectOutput out) throws IOException {
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
         out.writeInt(key.length);
         out.writeInt(value.length);
         out.write(key);
         out.write(value);
     }
 
-    @Override public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         key = new byte[in.readInt()];
         value = new byte[in.readInt()];
         in.read(key);
@@ -42,8 +44,8 @@ public class KeyValue implements Serializable, Externalizable {
 
     public String toJson() {
         StringBuilder builder = new StringBuilder((key.length + value.length) * 4 / 3);
-        builder.append("{\n\"key\":\"").append(encoder64.encodeToString(key)).append("\",\n\"value\":\"")
-            .append(encoder64.encodeToString(value)).append("\"\n}");
+        builder.append("{\n\"key\":\"").append(encoder64.encodeToString(key)).append("\",\n\"value\":\"").append
+            (encoder64.encodeToString(value)).append("\"\n}");
         return builder.toString();
     }
 }

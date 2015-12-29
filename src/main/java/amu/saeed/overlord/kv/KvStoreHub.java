@@ -1,19 +1,20 @@
 package amu.saeed.overlord.kv;
 
+import amu.saeed.overlord.Configuration;
 import amu.saeed.overlord.cache.Cache;
-import amu.saeed.overlord.cache.HazelcastDataGrid;
 import amu.saeed.overlord.cache.LocalCache;
+import amu.saeed.overlord.cache.RedisCache;
 
 public class KvStoreHub {
     final private Cache localCache;
     final private Cache inMemCache;
 
-    public KvStoreHub() {
-        localCache = new LocalCache();
-        inMemCache = new HazelcastDataGrid();
+    public KvStoreHub(Configuration conf) {
+        localCache = new LocalCache(conf.getL1CacheSize());
+        inMemCache = new RedisCache(conf.getRedisAddressUrl());
     }
 
-    public void put(byte[] key, byte[] val) {
+    public void put(long key, byte[] val) {
         // put the data in backing store
 
         // put the data in inMem
@@ -23,17 +24,15 @@ public class KvStoreHub {
         localCache.updateIfPresent(key, val);
     }
 
-    public byte[] get(byte[] key) {
+    public byte[] get(long key) {
         byte[] value = null;
         // try get from local cache
         value = localCache.get(key);
-        if (value != null)
-            return value;
+        if (value != null) return value;
 
         // the key is not in local cache. Try Redis...
         value = inMemCache.get(key);
-        if (value != null)
-            return value;
+        if (value != null) return value;
 
 
         // the key is not in Redis. Try the backing store
@@ -42,7 +41,7 @@ public class KvStoreHub {
         return null;
     }
 
-    public void delete(byte[] key) {
+    public void delete(long key) {
         // delete the key from backing store
 
         // delete the key from Redis

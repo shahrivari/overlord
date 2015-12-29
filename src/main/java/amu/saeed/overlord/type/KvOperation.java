@@ -31,12 +31,14 @@ public class KvOperation implements Serializable, Externalizable {
         return operation;
     }
 
-    @Override public void writeExternal(ObjectOutput out) throws IOException {
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
         out.write(operation);
         keyValue.writeExternal(out);
     }
 
-    @Override public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         operation = in.readByte();
         keyValue = new KeyValue();
         keyValue.readExternal(in);

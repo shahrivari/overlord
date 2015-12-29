@@ -1,5 +1,6 @@
 package amu.saeed.overlord.kv;
 
+import amu.saeed.overlord.Configuration;
 import com.google.common.base.Stopwatch;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,16 +13,16 @@ public class KvStoreHubTest {
      * Test the performance of KvStoreHub
      */
     @Test public void pressureTest() throws Exception {
-        int itemsCount = 10_000;
-        KvStoreHub hub = new KvStoreHub();
+        int itemsCount = 100_000;
+        KvStoreHub hub = new KvStoreHub(new Configuration());
         Random random = new Random();
         Stopwatch stopwatch = Stopwatch.createStarted();
         for (int i = 0; i < itemsCount; i++)
             if (random.nextInt() % 2 == 0)
-                hub.put(Integer.toBinaryString(random.nextInt()).getBytes(),
+                hub.put(random.nextLong(),
                     Integer.toBinaryString(random.nextInt()).getBytes());
             else
-                hub.delete(Integer.toBinaryString(random.nextInt()).getBytes());
+                hub.delete(random.nextLong());
 
         stopwatch.stop();
         System.out.printf("%,d put/deletes took %s", itemsCount, stopwatch);

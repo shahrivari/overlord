@@ -2,11 +2,11 @@ package amu.saeed.overlord.cache;
 
 public interface Cache {
 
-    void put(byte[] key, byte[] val);
+    void put(long key, byte[] val);
 
-    byte[] get(byte[] key);
+    byte[] get(long key);
 
-    void delete(byte[] key);
+    void delete(long key);
 
-    void updateIfPresent(byte[] key, byte[] val);
+    void updateIfPresent(long key, byte[] val);
 }

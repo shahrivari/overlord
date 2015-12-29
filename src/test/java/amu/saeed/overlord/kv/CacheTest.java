@@ -15,9 +15,9 @@ public class CacheTest {
      * Test the performance of KvStoreHub
      */
     @Test public void pressureTest() throws Exception {
-        int itemsCount = 10_000_000;
+        int itemsCount = 1_000_000;
         AtomicInteger remaining = new AtomicInteger(itemsCount);
-        Cache cache = new RedisCache();
+        Cache cache = new RedisCache("redis://localhost:6379");
         Random random = new Random();
         Stopwatch stopwatch = Stopwatch.createStarted();
         Thread[] threads = new Thread[40];
@@ -25,10 +25,10 @@ public class CacheTest {
             threads[i] = new Thread(() -> {
                 while (remaining.decrementAndGet() > 0)
                     if (random.nextInt() % 2 == 0)
-                        cache.put(Integer.toBinaryString(random.nextInt()).getBytes(),
+                        cache.put(random.nextLong(),
                             Integer.toBinaryString(random.nextInt()).getBytes());
                     else
-                        cache.delete(Integer.toBinaryString(random.nextInt()).getBytes());
+                        cache.delete(random.nextLong());
             });
             threads[i].start();
         }
