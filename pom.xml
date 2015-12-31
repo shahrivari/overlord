@@ -35,20 +35,20 @@
             <version>0.9.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.ignite</groupId>
-            <artifactId>ignite-core</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
-            <version>3.5.4</version>
-        </dependency>
-        <dependency>
             <groupId>biz.paluch.redis</groupId>
             <artifactId>lettuce</artifactId>
             <version>4.0.2.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.msgpack</groupId>
+            <artifactId>msgpack-core</artifactId>
+            <version>0.7.1</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.msgpack</groupId>-->
+            <!--<artifactId>jackson-dataformat-msgpack</artifactId>-->
+            <!--<version>0.7.1</version>-->
+        <!--</dependency>-->
     </dependencies>
 
 
